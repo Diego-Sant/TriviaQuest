@@ -24,7 +24,7 @@ export const Header = () => {
                     <SignedOut>
                         <SignInButton mode="modal" afterSignInUrl="/quizes" afterSignUpUrl="/quizes">
                             <Button size="lg" variant="ghost">
-                                Login
+                                Entrar
                             </Button>
                         </SignInButton>
                     </SignedOut>

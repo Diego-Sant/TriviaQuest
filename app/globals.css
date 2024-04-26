@@ -2,7 +2,8 @@
   @tailwind components;
   @tailwind utilities;
 
-  body {
+  body, html, :root {
+    @apply h-full;
     background-color: #121212;
   }
 
