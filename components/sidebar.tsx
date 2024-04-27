@@ -22,7 +22,7 @@ export const Sidebar = ({className}: Props) => {
             </div>
         </Link>
         <div className='flex flex-col gap-y-2 flex-1'>
-            <SidebarItem label='Menu Principal' href='/quizes' iconSrc='/menu.svg' />
+            <SidebarItem label='Categorias' href='/quizes' iconSrc='/menu.svg' />
             <SidebarItem label='Líderes' href='/lideres' iconSrc='/lideranca.svg' />
             <SidebarItem label='Missões' href='/missoes' iconSrc='/missoes.svg' />
             <SidebarItem label='Loja' href='/loja' iconSrc='/loja.svg' />
