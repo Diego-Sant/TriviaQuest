@@ -22,7 +22,7 @@ const List = ({categories, activeCategoryId}: Props) => {
         if (pending) return;
 
         if (id === activeCategoryId) {
-            return router.push("/quizes");
+            return router.push("/quizzes");
         }
 
         startTransition(() => {

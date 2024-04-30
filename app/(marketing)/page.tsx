@@ -31,12 +31,12 @@ export default function Home() {
           </ClerkLoading>
           <ClerkLoaded>
             <SignedOut>
-              <SignUpButton mode="modal" afterSignInUrl="/quizes" afterSignUpUrl="/quizes">
+              <SignUpButton mode="modal" afterSignInUrl="/quizzes" afterSignUpUrl="/quizzes">
                 <Button size="lg" variant="secondary" className="w-full">
                   Cadastrar
                 </Button>
               </SignUpButton>
-              <SignInButton mode="modal" afterSignInUrl="/quizes" afterSignUpUrl="/quizes">
+              <SignInButton mode="modal" afterSignInUrl="/quizzes" afterSignUpUrl="/quizzes">
                 <Button size="lg" variant="primaryOutline" className="w-full">
                   Já tenho uma conta
                 </Button>
@@ -44,7 +44,7 @@ export default function Home() {
             </SignedOut>
             <SignedIn>
               <Button size="lg" variant="secondary" className="w-full" asChild>
-                <Link href="/quizes">
+                <Link href="/quizzes">
                   Entrar
                 </Link>
               </Button>

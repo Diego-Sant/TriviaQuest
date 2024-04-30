@@ -19,13 +19,13 @@ const QuizesPage = async () => {
     return (
         <div className="text-white flex flex-row-reverse gap-[48px] px-6">
             <StickyWrapper>
-                <UserProgress activeCategory={{title: "Naruto", 
-                    imageSrc: "/naruto.svg"}} hearts={5} 
-                    points={100} hasActiveSubscription={false} 
+                <UserProgress activeCategory={userProgress.activeCategory} 
+                hearts={userProgress.hearts} points={userProgress.points} 
+                hasActiveSubscription={false} 
                 />
             </StickyWrapper>
             <FeedWrapper>
-                <Header title="Naruto" />
+                <Header title={userProgress.activeCategory.title} />
             </FeedWrapper>
         </div>
     );

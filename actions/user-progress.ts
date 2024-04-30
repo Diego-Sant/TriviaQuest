@@ -37,8 +37,8 @@ export const upsertUserProgress = async (categoryId: number) => {
         });
 
         revalidatePath("/categorias");
-        revalidatePath("/quizes");
-        redirect("/quizes");
+        revalidatePath("/quizzes");
+        redirect("/quizzes");
     }
 
     await db.insert(userProgress).values({
@@ -49,7 +49,7 @@ export const upsertUserProgress = async (categoryId: number) => {
     });
 
     revalidatePath("/categorias");
-    revalidatePath("/quizes");
-    redirect("/quizes");
+    revalidatePath("/quizzes");
+    redirect("/quizzes");
 }
 

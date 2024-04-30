@@ -13,7 +13,7 @@ const font = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "TriviaQuest",
-  description: "Site com diversos quizes sobre entretenimento em geral.",
+  description: "Site com diversos quizzes sobre entretenimento em geral.",
 };
 
 export default function RootLayout({
