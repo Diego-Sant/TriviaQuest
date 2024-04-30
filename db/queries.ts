@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs";
 import db from "./drizzle";
 import { eq } from "drizzle-orm";
 
-import { categories, userProgress } from "./schema";
+import { categories, quizzes, units, userProgress } from "./schema";
 
 export const getUserProgress = cache(async () => {
     const { userId } = await auth();
@@ -23,6 +23,45 @@ export const getUserProgress = cache(async () => {
 
     return data;
 });
+
+export const getUnits = cache(async () => {
+    const userProgress = await getUserProgress();
+
+    if (!userProgress?.activeCategoryId) {
+        return [];
+    }
+
+    const data = await db.query.units.findMany({
+        where: eq(units.categoryId, userProgress.activeCategoryId),
+        with: {
+            quizzes: {
+                with: {
+                    challenges: {
+                        with: {
+                            challengeProgress: true
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const normalizedData = data.map((unit) => {
+        const quizzesWithCompletedStatus = unit.quizzes.map((quiz) => {
+            const allCompletedChallenges = quiz.challenges.every((challenge) => {
+                return challenge.challengeProgress 
+                && challenge.challengeProgress.length > 0
+                && challenge.challengeProgress.every((progress) => progress.completed)
+            });
+
+            return { ...quiz, completed: allCompletedChallenges }
+        });
+
+        return { ...unit, quizzes: quizzesWithCompletedStatus}
+    });
+
+    return normalizedData;
+})
 
 export const getCategories = cache(async () => {
     const data = await db.query.categories.findMany();

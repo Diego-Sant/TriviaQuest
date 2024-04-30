@@ -3,14 +3,15 @@ import StickyWrapper from "@/components/sticky-wrapper";
 import UserProgress from "@/components/user-progress";
 import Header from "./header";
 
-import { getUserProgress } from "@/db/queries";
+import { getUnits, getUserProgress } from "@/db/queries";
 
 import { redirect } from "next/navigation";
 
 const QuizesPage = async () => {
     const userProgressData = getUserProgress();
+    const unitsData = getUnits();
 
-    const [userProgress] = await Promise.all([userProgressData])
+    const [userProgress, units] = await Promise.all([userProgressData, unitsData])
 
     if (!userProgress || !userProgress.activeCategory) {
         redirect("/categorias")
@@ -26,6 +27,11 @@ const QuizesPage = async () => {
             </StickyWrapper>
             <FeedWrapper>
                 <Header title={userProgress.activeCategory.title} />
+                {units.map((unit) => (
+                    <div key={unit.id} className="mb-10">
+                        {JSON.stringify(unit)}
+                    </div>
+                ))}
             </FeedWrapper>
         </div>
     );

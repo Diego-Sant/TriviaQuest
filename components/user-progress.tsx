@@ -14,11 +14,13 @@ type Props = {
 }
 
 const UserProgress = ({activeCategory, hearts, points, hasActiveSubscription}: Props) => {
-  return (  
+    const imageWidth = activeCategory.title === "Demon Slayer" || activeCategory.title === "DC Comics" ? 65 : activeCategory.title === "God of War" || activeCategory.title === "Bleach" || activeCategory.title === "Attack on Titan" ? 110 : 90;
+
+    return (  
     <div className="flex items-center justify-between gap-x-2 w-full">
         <Link href="/categorias">
             <Button variant="ghost">
-                <Image src={activeCategory.imageSrc} alt={activeCategory.title} height={40} width={62} />
+                <Image src={activeCategory.imageSrc} alt={activeCategory.title} height={40} width={imageWidth} />
             </Button>
         </Link>
         <Link href="/loja">
