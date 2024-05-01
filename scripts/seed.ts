@@ -39,20 +39,26 @@ const main = async () => {
         //     }
         // ]);
 
-        // await db.insert(schema.quizzes).values([
-        //     {
-        //         id: 1,
-        //         unitId: 1,
-        //         order: 1,
-        //         title: "Nível 1(Iniciante)"
-        //     },
-        //     {
-        //         id: 2,
-        //         unitId: 1,
-        //         order: 2,
-        //         title: "Nível 2(Básico)"
-        //     }
-        // ])
+        await db.insert(schema.quizzes).values([
+            {
+                id: 3,
+                unitId: 1,
+                order: 3,
+                title: "Nível 3(Iniciante)"
+            },
+            {
+                id: 4,
+                unitId: 1,
+                order: 4,
+                title: "Nível 4(Iniciante)"
+            },
+            {
+                id: 5,
+                unitId: 1,
+                order: 5,
+                title: "Nível 5(Básico)"
+            },
+        ])
 
         // await db.insert(schema.challenges).values([
         //     {

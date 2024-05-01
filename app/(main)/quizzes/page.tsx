@@ -6,6 +6,7 @@ import Header from "./header";
 import { getUnits, getUserProgress } from "@/db/queries";
 
 import { redirect } from "next/navigation";
+import Unit from "./unit";
 
 const QuizesPage = async () => {
     const userProgressData = getUserProgress();
@@ -29,7 +30,7 @@ const QuizesPage = async () => {
                 <Header title={userProgress.activeCategory.title} />
                 {units.map((unit) => (
                     <div key={unit.id} className="mb-10">
-                        {JSON.stringify(unit)}
+                        <Unit id={unit.id} order={unit.order} description={unit.description} title={unit.title} quizzes={unit.quizzes} activeQuiz={undefined} activeQuizPercentage={0} />
                     </div>
                 ))}
             </FeedWrapper>
