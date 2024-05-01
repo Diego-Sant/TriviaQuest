@@ -51,6 +51,10 @@ export const getUnits = cache(async () => {
 
     const normalizedData = data.map((unit) => {
         const quizzesWithCompletedStatus = unit.quizzes.map((quiz) => {
+            if (quiz.challenges.length === 0) {
+                return { ...quiz, completed: false };
+            }
+
             const allCompletedChallenges = quiz.challenges.every((challenge) => {
                 return challenge.challengeProgress 
                 && challenge.challengeProgress.length > 0
