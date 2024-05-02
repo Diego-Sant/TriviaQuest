@@ -2,10 +2,11 @@
 
 import { challengeOptions, challenges } from "@/db/schema";
 
-import { useState } from "react";
+import { use, useState } from "react";
 
 import Header from "./header";
 import Challenge from "./challenge";
+import Footer from "./footer";
 
 type Props = {
     initialPercentage: number;
@@ -29,10 +30,19 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
         return uncompletedIndex === -1 ? 0 : uncompletedIndex;
     });
 
+    const [selectedOption, setSelectedOption] = useState<number>();
+    const [status, setStatus] = useState<"correct" | "wrong" | "none">("none");
+
     const challenge = challenges[activeIndex];
     const options = challenge?.challengeOptions ?? [];
 
-    const title = challenge.question
+    const onSelect = (id: number) => {
+        if (status !== "none") return;
+
+        setSelectedOption(id);
+    };
+
+    const title = challenge.question;
   
     return (
     <>
@@ -47,14 +57,16 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
                         {title}
                     </h1>
                     <div>
-                        <Challenge options={options} onSelect={() => {}}
-                            status="none" selectedOption={undefined} disabled={false}
+                        <Challenge options={options} onSelect={onSelect}
+                            status={status} selectedOption={selectedOption} disabled={false}
                             type={challenge.type}
                         />
                     </div>
                 </div>
             </div>
         </div>
+
+        <Footer disabled={!selectedOption} status={status} onCheck={() => {}} />
     </>
   )
 }

@@ -1,7 +1,11 @@
+import { useCallback } from "react";
+import { useAudio, useKey } from "react-use";
+
 import { challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 
 import Image from "next/image";
+
 
 type Props = {
     id: number;
@@ -17,16 +21,28 @@ type Props = {
 }
 
 const Card = ({id, imageSrc, audioSrc, text, shortcut, selected, onClick, disabled, status, type}: Props) => {
+  const [audio, _, controls] = useAudio({ src: audioSrc || "" });
+  
+  const handleClick = useCallback(() => {
+    if (disabled) return;
+
+    controls.play();
+    onClick();
+  }, [disabled, onClick, controls]);
+
+  useKey(shortcut, handleClick, {}, [handleClick]);
+  
   return (
-    <div onClick={() => {}} className={cn
-        ("h-full border-2 rounded-xl border-b-4 border-[#1f1f1f] hover:bg-[#1f1f1f]/60 p-4 lg:p-6 cursor-pointer active:border-b-2",
-            selected && "border-sky-600 bg-sky-400 hover:bg-sky-300",
-            selected && status === "correct" && "border-green-600 bg-green-400 hover:bg-green-300",
-            selected && status === "wrong" && "border-rose-600 bg-rose-400 hover:bg-rose-300",
-            disabled && "pointer-events-none hover:bg-white/70",
-            type === "ASSIST" && "lg:p-3 w-full"
-        )}
-    >
+    <div onClick={handleClick} className={cn
+      ("h-full border-2 rounded-xl border-b-4 border-[#1f1f1f] hover:bg-[#1f1f1f]/60 p-4 lg:p-6 cursor-pointer active:border-b-2",
+        selected && "border-sky-600 bg-sky-400 hover:bg-sky-300",
+        selected && status === "correct" && "border-green-600 bg-green-400 hover:bg-green-300",
+        selected && status === "wrong" && "border-rose-600 bg-rose-400 hover:bg-rose-300",
+        disabled && "pointer-events-none hover:bg-white/70",
+        type === "ASSIST" && "lg:p-3 w-full"
+    )}>
+
+      {audio}
       {imageSrc && (
         <div className="relative aspect-square mb-4 max-h-[80px] lg:max-h-[150px] w-full flex md:flex-col items-center justify-center">
             <Image src={imageSrc} width={130} height={130} alt={text} />
