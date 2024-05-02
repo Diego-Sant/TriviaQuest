@@ -1,12 +1,15 @@
 "use client";
 
+import { useState, useTransition } from "react";
+
+import { toast } from "sonner";
+
 import { challengeOptions, challenges } from "@/db/schema";
-
-import { use, useState } from "react";
-
+import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import Header from "./header";
 import Challenge from "./challenge";
 import Footer from "./footer";
+import { reduceHearts } from "@/actions/user-progress";
 
 type Props = {
     initialPercentage: number;
@@ -20,6 +23,8 @@ type Props = {
 }
 
 const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChallenges, userSubscription}: Props) => {
+    const [pending, startTransition] = useTransition();
+    
     const [hearts, setHearts] = useState(initialHearts);
     const [percentage, setPercentage] = useState(initialPercentage);
     const [challenges] = useState(initialQuizChallenges);
@@ -36,11 +41,75 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
     const challenge = challenges[activeIndex];
     const options = challenge?.challengeOptions ?? [];
 
+    const onNext = () => {
+        setActiveIndex((current) => current + 1);
+    };
+
     const onSelect = (id: number) => {
         if (status !== "none") return;
 
         setSelectedOption(id);
     };
+
+    const onContinue = () => {
+        if (!selectedOption) return;
+
+        if (status === "wrong") {
+            setStatus("none");
+            setSelectedOption(undefined);
+            return;
+        }
+
+        if (status === "correct") {
+            onNext();
+            setStatus("none");
+            setSelectedOption(undefined);
+            return;
+        }
+
+        const correctOption = options.find((option) => option.correct);
+
+        if (!correctOption) {
+            return;
+        }
+
+        if (correctOption.id === selectedOption) {
+            startTransition(() => {
+                upsertChallengeProgress(challenge.id)
+                    .then((response) => {
+                        if (response?.error === "hearts") {
+                            console.error("Não tem corações restantes!");
+                            return;
+                        }
+
+                        setStatus("correct");
+                        setPercentage((prev) => prev + 100 / challenges.length);
+
+                        if (initialPercentage === 100) {
+                            setHearts((prev) => Math.min(prev + 1, 10));
+                        }
+                    })
+                    .catch(() => toast.error("Algo de errado aconteceu. Tente novamente mais tarde!"))
+            });
+        } else {
+            startTransition(() => {
+                reduceHearts(challenge.id)
+                    .then((response) => {
+                        if (response?.error === "hearts") {
+                            console.error("Sem corações restantes!");
+                            return;
+                        }
+
+                        setStatus("wrong");
+
+                        if (!response?.error) {
+                            setHearts((prev) => Math.max(prev - 1, 0));
+                        }
+                    })
+                    .catch(() => toast.error("Algo de errado aconteceu. Tente novamente mais tarde!"));
+            });
+        }
+    }
 
     const title = challenge.question;
   
@@ -58,7 +127,7 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
                     </h1>
                     <div>
                         <Challenge options={options} onSelect={onSelect}
-                            status={status} selectedOption={selectedOption} disabled={false}
+                            status={status} selectedOption={selectedOption} disabled={pending}
                             type={challenge.type}
                         />
                     </div>
@@ -66,7 +135,7 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
             </div>
         </div>
 
-        <Footer disabled={!selectedOption} status={status} onCheck={() => {}} />
+        <Footer disabled={pending || !selectedOption} status={status} onCheck={onContinue} />
     </>
   )
 }

@@ -15,11 +15,11 @@ const Footer = ({onCheck, status, disabled, quizId}: Props) => {
     useKey("Enter", onCheck, {}, [onCheck]);
 
   return (
-    <footer className={cn("lg:h-[140px] h-[100px] border-t-2 border-[#1f1f1f]",
+    <footer className={cn("lg:h-[140px] h-[100px] mt-4 md:mt-0 border-t-2 border-[#1f1f1f]",
         status === "correct" && "border-transparent bg-green-400",
         status === "wrong" && "border-t-transparent bg-rose-400"
     )}>
-        <div className="max-w-[1140px] h-full mx-auto flex items-center 
+        <div className="max-w-[1140px] mt-3 md:mt-0 h-full mx-auto flex items-center 
             justify-between px-6 lg:px-10"
         >
 

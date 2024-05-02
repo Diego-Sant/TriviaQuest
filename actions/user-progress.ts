@@ -2,9 +2,10 @@
 
 import db from "@/db/drizzle";
 import { getCategoryById, getUserProgress } from "@/db/queries";
-import { userProgress } from "@/db/schema";
+import { challengeProgress, challenges, userProgress } from "@/db/schema";
 
 import { auth, currentUser } from "@clerk/nextjs";
+import { and, eq } from "drizzle-orm";
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -51,5 +52,57 @@ export const upsertUserProgress = async (categoryId: number) => {
     revalidatePath("/categorias");
     revalidatePath("/quizzes");
     redirect("/quizzes");
+};
+
+export const reduceHearts = async (challengeId: number) => {
+    const {userId} = await auth();
+
+    if (!userId) {
+        throw new Error("Não autorizado!");
+    }
+
+    const currentUserProgress = await getUserProgress();
+
+    const challenge = await db.query.challenges.findFirst({
+        where: eq(challenges.id, challengeId)
+    });
+
+    if (!challenge) {
+        throw new Error("Quiz não encontrado!");
+    }
+
+    const quizId = challenge.quizId;
+
+    const existingChallengeProgress = await db.query.challengeProgress.findFirst({
+        where: and(
+            eq(challengeProgress.userId, userId),
+            eq(challengeProgress.challengeId, challengeId)
+        )
+    });
+
+    const isPractice = !!existingChallengeProgress;
+
+    if(isPractice) {
+        return { error: "practice" };
+    }
+
+    if (!currentUserProgress) {
+        throw new Error("Progresso de usuário não encontrado!");
+    }
+
+    if (currentUserProgress.hearts === 0) {
+        return { error: "hearts" };
+    }
+
+    await db.update(userProgress).set({
+        hearts: Math.max(currentUserProgress.hearts - 1, 0),
+    }).where(eq(userProgress.userId, userId));
+
+    revalidatePath("/loja");
+    revalidatePath("/quiz");
+    revalidatePath("/quizzes");
+    revalidatePath("/lideres");
+    revalidatePath("/missoes");
+    revalidatePath(`/quiz/${quizId}`);
 }
 

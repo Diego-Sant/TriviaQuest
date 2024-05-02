@@ -31,7 +31,7 @@ const List = ({categories, activeCategoryId}: Props) => {
     }
   
     return (
-    <div className="pt-6 grid grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-4">
+    <div className="pt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-4">
       {categories.map((category) => (
         <Card key={category.id} id={category.id} title={category.title} imageSrc={category.imageSrc}
         onClick={onClick} disabled={pending} active={category.id === activeCategoryId} />

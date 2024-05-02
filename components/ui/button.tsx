@@ -14,7 +14,7 @@ const buttonVariants = cva(
         primaryOutline: "bg-[#121212] text-sky-400 hover:bg-[#3c4042]",
         secondary: "bg-green-500 text-primary-foreground hover:bg-green-500/90 border-green-600 border-b-4 active:border-b-0",
         secondaryOutline: "bg-[#121212] text-green-500 hover:bg-[#3c4042]",
-        destructive: "bg-rose-500 text-primary-foreground hover:bg-rose-500/90 border-rose-600 border-b-4 active:border-b-0",
+        destructive: "bg-rose-600 text-primary-foreground hover:bg-rose-500 border-rose-700 border-b-4 active:border-b-0",
         destructiveOutline: "bg-[#1c1c1c] text-rose-500 hover:bg-[#3c4042]",
         premium: "bg-indigo-500 text-primary-foreground hover:bg-indigo-500/90 border-indigo-600 border-b-4 active:border-b-0",
         premiumOutline: "bg-[#121212] text-indigo-500 hover:bg-[#3c4042]",

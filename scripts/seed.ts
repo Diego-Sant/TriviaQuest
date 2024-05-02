@@ -39,67 +39,101 @@ const main = async () => {
         //     }
         // ]);
 
-        await db.insert(schema.quizzes).values([
-            {
-                id: 3,
-                unitId: 1,
-                order: 3,
-                title: "Nível 3(Iniciante)"
-            },
-            {
-                id: 4,
-                unitId: 1,
-                order: 4,
-                title: "Nível 4(Iniciante)"
-            },
-            {
-                id: 5,
-                unitId: 1,
-                order: 5,
-                title: "Nível 5(Básico)"
-            },
-        ])
+        // await db.insert(schema.quizzes).values([
+        //     {
+        //         id: 3,
+        //         unitId: 1,
+        //         order: 3,
+        //         title: "Nível 3(Iniciante)"
+        //     },
+        //     {
+        //         id: 4,
+        //         unitId: 1,
+        //         order: 4,
+        //         title: "Nível 4(Iniciante)"
+        //     },
+        //     {
+        //         id: 5,
+        //         unitId: 1,
+        //         order: 5,
+        //         title: "Nível 5(Básico)"
+        //     },
+        // ])
 
         // await db.insert(schema.challenges).values([
         //     {
-        //         id: 1,
+        //         id: 2,
         //         quizId: 1,
         //         type: "SELECT",
-        //         order: 1,
-        //         question: 'Qual desses personagens é o Shino Aburame?'
+        //         order: 2,
+        //         question: 'Quais foram os integrantes iniciais do time 7?'
+        //     },
+        //     {
+        //         id: 3,
+        //         quizId: 1,
+        //         type: "ASSIST",
+        //         order: 3,
+        //         question: 'Qual é a vila que o Naruto vive?'
         //     }
         // ]);
 
         // await db.insert(schema.challengeOptions).values([
         //     {
-        //         id: 1,
-        //         challengeId: 1,
-        //         imageSrc: "/shino.svg",
+        //         id: 5,
+        //         challengeId: 2,
+        //         imageSrc: "/quizzes/team9.svg",
+        //         correct: false,
+        //         text: "Maito Gai, Rock Lee, Neji e Tenten"
+        //     },
+        //     {
+        //         id: 6,
+        //         challengeId: 2,
+        //         imageSrc: "/quizzes/team10.svg",
+        //         correct: false,
+        //         text: "Asuma, Shikamaru, Choji e Ino"
+        //     },
+        //     {
+        //         id: 7,
+        //         challengeId: 2,
+        //         imageSrc: "/quizzes/team7.svg",
         //         correct: true,
-        //         text: "Opção 1"
+        //         text: "Kakashi, Naruto, Sasuke e Sakura"
         //     },
         //     {
-        //         id: 2,
-        //         challengeId: 1,
-        //         imageSrc: "/neji.svg",
+        //         id: 8,
+        //         challengeId: 2,
+        //         imageSrc: "/quizzes/team8.svg",
         //         correct: false,
-        //         text: "Opção 2"
+        //         text: "Kurenai, Kiba, Shino e Hinata"
+        //     },
+        // ]);
+
+        // await db.insert(schema.challengeOptions).values([
+        //     {
+        //         id: 9,
+        //         challengeId: 3,
+        //         correct: false,
+        //         text: "Vila Oculta da Pedra"
         //     },
         //     {
-        //         id: 3,
-        //         challengeId: 1,
-        //         imageSrc: "/kiba.svg",
+        //         id: 10,
+        //         challengeId: 3,
         //         correct: false,
-        //         text: "Opção 3"
+        //         text: "Vila Oculta da Areia"
         //     },
         //     {
-        //         id: 4,
-        //         challengeId: 1,
-        //         imageSrc: "/choji.svg",
-        //         correct: false,
-        //         text: "Opção 4"
+        //         id: 11,
+        //         challengeId: 3,
+        //         correct: true,
+        //         text: "Vila Oculta da Folha"
         //     },
-        // ])
+        //     {
+        //         id: 12,
+        //         challengeId: 3,
+        //         correct: false,
+        //         text: "Vila Oculta da Nuvem"
+        //     },
+        // ]);
 
         console.log("Acesso finalizado!");
     } catch (error) {
