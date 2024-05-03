@@ -1,17 +1,21 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useAudio, useWindowSize } from "react-use";
+import { useAudio, useMount, useWindowSize } from "react-use";
 import Confetti from "react-confetti";
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
+
 import { toast } from "sonner";
 
+import { usePracticeModal } from "@/store/use-practice-modal";
+import { useHeartsModal } from "@/store/use-hearts-modal";
 import { reduceHearts } from "@/actions/user-progress";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import { challengeOptions, challenges } from "@/db/schema";
+
 import Header from "./header";
 import Challenge from "./challenge";
 import Footer from "./footer";
@@ -30,7 +34,16 @@ type Props = {
 
 const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChallenges, userSubscription}: Props) => {
     const { width, height } = useWindowSize();
-    const router = useRouter()
+    const router = useRouter();
+
+    const {open: openHeartsModal} = useHeartsModal(); 
+    const {open: openPracticeModal} = usePracticeModal(); 
+
+    useMount(() => {
+        if (initialPercentage === 100) {
+            openPracticeModal();
+        }
+    })
     
     const [finishAudio] = useAudio({ src: "/audio/finish.mp3", autoPlay: true});
     const [correctAudio, _c, correctControls] = useAudio({ src: "/audio/correct.wav" });
@@ -39,7 +52,9 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
     
     const [quizId] = useState(initialQuizId);
     const [hearts, setHearts] = useState(initialHearts);
-    const [percentage, setPercentage] = useState(initialPercentage);
+    const [percentage, setPercentage] = useState(() => {
+        return initialPercentage === 100 ? 0 : initialPercentage;
+    });
     const [challenges] = useState(initialQuizChallenges);
 
     const [activeIndex, setActiveIndex] = useState(() => {
@@ -91,7 +106,7 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
                 upsertChallengeProgress(challenge.id)
                     .then((response) => {
                         if (response?.error === "hearts") {
-                            console.error("Não tem corações restantes!");
+                            openHeartsModal();
                             return;
                         }
 
@@ -110,7 +125,7 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
                 reduceHearts(challenge.id)
                     .then((response) => {
                         if (response?.error === "hearts") {
-                            console.error("Sem corações restantes!");
+                            openHeartsModal();
                             return;
                         }
 
