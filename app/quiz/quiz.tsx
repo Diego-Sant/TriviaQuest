@@ -1,15 +1,21 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useAudio, useWindowSize } from "react-use";
+import Confetti from "react-confetti";
+
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { toast } from "sonner";
 
-import { challengeOptions, challenges } from "@/db/schema";
+import { reduceHearts } from "@/actions/user-progress";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
+import { challengeOptions, challenges } from "@/db/schema";
 import Header from "./header";
 import Challenge from "./challenge";
 import Footer from "./footer";
-import { reduceHearts } from "@/actions/user-progress";
+import ResultCard from "./result-card";
 
 type Props = {
     initialPercentage: number;
@@ -23,8 +29,15 @@ type Props = {
 }
 
 const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChallenges, userSubscription}: Props) => {
+    const { width, height } = useWindowSize();
+    const router = useRouter()
+    
+    const [finishAudio] = useAudio({ src: "/audio/finish.mp3", autoPlay: true});
+    const [correctAudio, _c, correctControls] = useAudio({ src: "/audio/correct.wav" });
+    const [incorrectAudio, _i, incorrectControls] = useAudio({ src: "/audio/incorrect.wav" });
     const [pending, startTransition] = useTransition();
     
+    const [quizId] = useState(initialQuizId);
     const [hearts, setHearts] = useState(initialHearts);
     const [percentage, setPercentage] = useState(initialPercentage);
     const [challenges] = useState(initialQuizChallenges);
@@ -82,6 +95,7 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
                             return;
                         }
 
+                        correctControls.play();
                         setStatus("correct");
                         setPercentage((prev) => prev + 100 / challenges.length);
 
@@ -100,6 +114,7 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
                             return;
                         }
 
+                        incorrectControls.play();
                         setStatus("wrong");
 
                         if (!response?.error) {
@@ -111,10 +126,40 @@ const Quiz = ({initialPercentage, initialHearts, initialQuizId, initialQuizChall
         }
     }
 
+    if (!challenge) {
+        return (
+            <>
+                {finishAudio}
+                <Confetti recycle={false} numberOfPieces={500} tweenDuration={10000} height={height} width={width} />
+                <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg 
+                    mx-auto text-center items-center justify-center h-full"
+                >
+                        <Image src="/finish.svg" alt="Parabéns por ter completado o capítulo!" 
+                            className="hidden lg:block" height={100} width={100}
+                        />
+                        <Image src="/finish.svg" alt="Parabéns por ter completado o capítulo!" 
+                            className="lg:hidden block" height={50} width={50}
+                        />
+                        <h1 className="text-xl lg:text-3xl font-bold text-neutral-200">Parabéns! 
+                            <br /> Você completou o capítulo!
+                        </h1>
+                        <div className="flex items-center gap-x-4 w-full">
+                            <ResultCard variant="points" value={challenges.length * 10} />
+                            <ResultCard variant="hearts" value={hearts} />
+                        </div>
+                </div>
+
+                <Footer quizId={quizId} status="completed" onCheck={() => router.push("/quizzes")} />
+            </>
+        )
+    }
+
     const title = challenge.question;
   
     return (
     <>
+        {incorrectAudio}
+        {correctAudio}
         <Header hearts={hearts} percentage={percentage} 
             hasActiveSubscription={!!userSubscription?.isActive} 
         />

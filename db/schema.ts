@@ -97,7 +97,7 @@ export const userProgress = pgTable("user_progress", {
     userName: text("user_name").notNull().default("Usuário"),
     userImageSrc: text("user_image_src").notNull().default("/TriviaQuestLogo.svg"),
     activeCategoryId: integer("active_category_id").references(() => categories.id, {onDelete: "cascade"}),
-    hearts: integer("hearts").notNull().default(5),
+    hearts: integer("hearts").notNull().default(10),
     points: integer("points").notNull().default(0),
 });
 

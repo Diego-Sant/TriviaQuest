@@ -36,6 +36,13 @@ const main = async () => {
         //         title: "Naruto",
         //         description: "Você realmente conhece Naruto?",
         //         order: 1,
+        //     },
+        //     {
+        //         id: 2,
+        //         categoryId: 2,
+        //         title: "Dragon Ball",
+        //         description: "Você realmente conhece Dragon Ball?",
+        //         order: 2,
         //     }
         // ]);
 
@@ -62,76 +69,76 @@ const main = async () => {
 
         // await db.insert(schema.challenges).values([
         //     {
-        //         id: 2,
-        //         quizId: 1,
-        //         type: "SELECT",
-        //         order: 2,
-        //         question: 'Quais foram os integrantes iniciais do time 7?'
+        //         id: 4,
+        //         quizId: 2,
+        //         type: "ASSIST",
+        //         order: 1,
+        //         question: 'Qual dos personagens fazia parte da Akatsuki?'
         //     },
         //     {
-        //         id: 3,
-        //         quizId: 1,
-        //         type: "ASSIST",
-        //         order: 3,
-        //         question: 'Qual é a vila que o Naruto vive?'
+        //         id: 5,
+        //         quizId: 2,
+        //         type: "SELECT",
+        //         order: 2,
+        //         question: 'Quem foi o segundo hokage?'
         //     }
         // ]);
 
         // await db.insert(schema.challengeOptions).values([
         //     {
-        //         id: 5,
-        //         challengeId: 2,
-        //         imageSrc: "/quizzes/team9.svg",
+        //         id: 17,
+        //         challengeId: 5,
+        //         imageSrc: "/quizzes/hiruzen.svg",
         //         correct: false,
-        //         text: "Maito Gai, Rock Lee, Neji e Tenten"
+        //         text: "Hiruzen Sarutobi"
         //     },
         //     {
-        //         id: 6,
-        //         challengeId: 2,
-        //         imageSrc: "/quizzes/team10.svg",
+        //         id: 18,
+        //         challengeId: 5,
+        //         imageSrc: "/quizzes/hashirama.svg",
         //         correct: false,
-        //         text: "Asuma, Shikamaru, Choji e Ino"
+        //         text: "Hashirama Senju"
         //     },
         //     {
-        //         id: 7,
-        //         challengeId: 2,
-        //         imageSrc: "/quizzes/team7.svg",
-        //         correct: true,
-        //         text: "Kakashi, Naruto, Sasuke e Sakura"
+        //         id: 19,
+        //         challengeId: 5,
+        //         imageSrc: "/quizzes/minato.svg",
+        //         correct: false,
+        //         text: "Minato Namikaze"
         //     },
         //     {
-        //         id: 8,
-        //         challengeId: 2,
-        //         imageSrc: "/quizzes/team8.svg",
+        //         id: 20,
+        //         challengeId: 5,
+        //         imageSrc: "/quizzes/tobirama.svg",
         //         correct: false,
-        //         text: "Kurenai, Kiba, Shino e Hinata"
+        //         text: "Tobirama Senju"
         //     },
         // ]);
 
         // await db.insert(schema.challengeOptions).values([
         //     {
-        //         id: 9,
-        //         challengeId: 3,
+        //         id: 13,
+        //         challengeId: 4,
         //         correct: false,
-        //         text: "Vila Oculta da Pedra"
+        //         text: "Gaara"
         //     },
         //     {
-        //         id: 10,
-        //         challengeId: 3,
-        //         correct: false,
-        //         text: "Vila Oculta da Areia"
-        //     },
-        //     {
-        //         id: 11,
-        //         challengeId: 3,
+        //         id: 14,
+        //         challengeId: 4,
         //         correct: true,
-        //         text: "Vila Oculta da Folha"
+        //         text: "Kimimaro Kaguya"
         //     },
         //     {
-        //         id: 12,
-        //         challengeId: 3,
+        //         id: 15,
+        //         challengeId: 4,
+        //         correct: true,
+        //         text: "Sasori"
+        //     },
+        //     {
+        //         id: 16,
+        //         challengeId: 4,
         //         correct: false,
-        //         text: "Vila Oculta da Nuvem"
+        //         text: "Zabuza Momochi"
         //     },
         // ]);
 

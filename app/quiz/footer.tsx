@@ -7,7 +7,7 @@ type Props = {
     onCheck: () => void;
     status: "correct" | "wrong" | "none" | "completed";
     disabled?: boolean;
-    quizId?: boolean;
+    quizId?: number;
 };
 
 const Footer = ({onCheck, status, disabled, quizId}: Props) => {
@@ -50,7 +50,7 @@ const Footer = ({onCheck, status, disabled, quizId}: Props) => {
                 variant={status === "wrong" ? "destructive" : "secondary"}
             >
                 {status === "none" && "Confirmar resposta"}
-                {status === "correct" && "Próxima pergunta"}
+                {status === "correct" && "Avançar"}
                 {status === "wrong" && "Tentar novamente"}
                 {status === "completed" && "Continuar"}
             </Button>
