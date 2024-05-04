@@ -10,6 +10,8 @@ import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+const POINTS_TO_REFILL = 80;
+
 export const upsertUserProgress = async (categoryId: number) => {
     const { userId } = await auth();
     const user = await currentUser();
@@ -106,3 +108,28 @@ export const reduceHearts = async (challengeId: number) => {
     revalidatePath(`/quiz/${quizId}`);
 }
 
+export const refillHearts = async () => {
+    const currentUserProgress = await getUserProgress();
+
+    if (!currentUserProgress) {
+        throw new Error("Usuário não encontrado!");
+    }
+
+    if (currentUserProgress.hearts === 10) {
+        throw new Error("A vida está cheia!");
+    }
+
+    if (currentUserProgress.points < POINTS_TO_REFILL) {
+        throw new Error("Não tem pontos suficientes!");
+    }
+
+    await db.update(userProgress).set({
+        hearts: 10,
+        points: currentUserProgress.points - POINTS_TO_REFILL,
+    }).where(eq(userProgress.userId, currentUserProgress.userId));
+
+    revalidatePath("/loja");
+    revalidatePath("/quiz");
+    revalidatePath("/missoes");
+    revalidatePath("/lideres");
+}
