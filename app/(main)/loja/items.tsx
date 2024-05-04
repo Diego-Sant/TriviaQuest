@@ -1,6 +1,8 @@
 "use client";
 
 import { refillHearts } from "@/actions/user-progress";
+import { createStripeUrl } from "@/actions/user-subscription";
+
 import { Button } from "@/components/ui/button";
 
 import Image from "next/image";
@@ -29,7 +31,19 @@ const Items = ({hearts, points, hasActiveSubscription}: Props) => {
                 .catch(() => toast.error("Algo de errado aconteceu. Tente novamente mais tarde!"))
         });
     }
-  
+
+    const onUpgrade = () => {
+        startTransition(() => {
+            createStripeUrl()
+                .then((response) => {
+                    if (response.data) {
+                        window.location.href = response.data;
+                    }
+                })
+                .catch(() => toast.error("Algo de errado aconteceu. Tente novamente mais tarde!"));
+        });
+    }
+
     return (
         <ul className="w-full">
             <div className="flex items-center w-full p-4 gap-x-4 border-t-2 border-[#1f1f1f]">
@@ -52,6 +66,19 @@ const Items = ({hearts, points, hasActiveSubscription}: Props) => {
                         </div>
                     )}
                 </Button>
+            </div>
+            <div className="flex items-center w-full p-4 pt-8 gap-x-4 border-t-2 border-[#1f1f1f]">
+                    <Image src="/unlimited.svg" alt="Vida ilimitada" height={60} width={60} />
+                    <div className="flex-1">
+                        <p className="text-neutral-200 text-base lg:text-xl font-bold">
+                            Vidas ilimitadas
+                        </p>
+                    </div>
+                    <Button disabled={pending}
+                        onClick={onUpgrade}
+                    >
+                        {hasActiveSubscription ? "Configurar" : "Aprimorar"}
+                    </Button>
             </div>
         </ul>
     )

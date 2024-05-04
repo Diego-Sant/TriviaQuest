@@ -3,15 +3,17 @@ import StickyWrapper from "@/components/sticky-wrapper";
 import UserProgress from "@/components/user-progress";
 import Items from "./items";
 
-import { getUserProgress } from "@/db/queries";
+import { getUserProgress, getUserSubscription } from "@/db/queries";
 import Image from "next/image";
 
 import { redirect } from "next/navigation";
 
 const ShopPage = async () => {
     const userProgressData = getUserProgress();
+    const userSubscriptionData = getUserSubscription();
 
-    const [ userProgress ] = await Promise.all([userProgressData]);
+    const [ userProgress, userSubscription ] = await 
+        Promise.all([userProgressData, userSubscriptionData]);
 
     if (!userProgress || !userProgress.activeCategory) {
         redirect("/categorias");
@@ -22,7 +24,7 @@ const ShopPage = async () => {
         <StickyWrapper>
             <UserProgress activeCategory={userProgress.activeCategory}
                 hearts={userProgress.hearts} points={userProgress.points}
-                hasActiveSubscription={false} 
+                hasActiveSubscription={!!userSubscription?.isActive} 
             />
         </StickyWrapper>
         <FeedWrapper>
@@ -36,7 +38,7 @@ const ShopPage = async () => {
                 Compre coisas com os seus pontos!
             </p>
             <Items hearts={userProgress.hearts} points={userProgress.points} 
-                hasActiveSubscription={false} 
+                hasActiveSubscription={!!userSubscription?.isActive} 
             />
         </FeedWrapper>
     </div>
