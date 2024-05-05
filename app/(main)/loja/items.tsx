@@ -4,6 +4,7 @@ import { refillHearts } from "@/actions/user-progress";
 import { createStripeUrl } from "@/actions/user-subscription";
 
 import { Button } from "@/components/ui/button";
+import { userSubscription } from "@/db/schema";
 
 import Image from "next/image";
 

@@ -1,4 +1,5 @@
 import { Progress } from "@/components/ui/progress";
+import { userSubscription } from "@/db/schema";
 import { useExitModal } from "@/store/use-exit-modal";
 
 import { InfinityIcon, X } from "lucide-react";
@@ -25,12 +26,12 @@ const Header = ({hearts, percentage, hasActiveSubscription}: Props) => {
         <Progress value={percentage} />
 
         <div className="text-rose-500 flex items-center font-bold">
-            <Image src="/heart.svg" height={28} width={28} 
+            <Image src={hasActiveSubscription ? "/unlimited.svg" : "/heart.svg"} height={28} width={28} 
                 alt="Vidas restantes" className="mr-2" 
             />
 
             {hasActiveSubscription ? 
-                <InfinityIcon className="h-6 w-6 stroke-[3]" /> : hearts}
+                <InfinityIcon className="h-5 w-5 stroke-[3] shrink-0" /> : hearts}
         </div>
 
     </header>

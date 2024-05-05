@@ -1,4 +1,4 @@
-import { getQuiz, getUserProgress } from '@/db/queries'
+import { getQuiz, getUserProgress, getUserSubscription } from '@/db/queries'
 import Quiz from './quiz';
 
 import { redirect } from 'next/navigation';
@@ -6,9 +6,10 @@ import { redirect } from 'next/navigation';
 const QuizPage = async () => {
     const quizData = getQuiz();
     const userProgressData = getUserProgress();
+    const userSubscriptionData = getUserSubscription();
 
-    const [quiz, userProgress] = await 
-        Promise.all([quizData, userProgressData])
+    const [quiz, userProgress, userSubscription] = await 
+        Promise.all([quizData, userProgressData, userSubscriptionData])
 
     if (!quiz || !userProgress) {
         redirect("/quizzes")
@@ -21,7 +22,7 @@ const QuizPage = async () => {
   return (
     <Quiz initialQuizId={quiz.id} initialQuizChallenges={quiz.challenges}
         initialHearts={userProgress.hearts} initialPercentage={initialPercentage}
-        userSubscription={null}
+        userSubscription={userSubscription}
     />
   )
 }

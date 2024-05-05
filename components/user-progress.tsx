@@ -31,7 +31,7 @@ const UserProgress = ({activeCategory, hearts, points, hasActiveSubscription}: P
         </Link>
         <Link href="/loja">
             <Button variant="ghost" className="text-rose-500">
-                <Image src="/heart.svg" height={22} width={22} alt="Vidas restantes" className="mr-2" />
+                <Image src={hasActiveSubscription ? "/unlimited.svg" : "/heart.svg"} height={22} width={22} alt="Vidas restantes" className="mr-2" />
                 {hasActiveSubscription ? <InfinityIcon className="h-4 w-4 stroke-[3]" /> : hearts}
             </Button>
         </Link>

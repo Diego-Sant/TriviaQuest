@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/db/drizzle";
-import { getCategoryById, getUserProgress } from "@/db/queries";
+import { getCategoryById, getUserProgress, getUserSubscription } from "@/db/queries";
 import { challengeProgress, challenges, userProgress } from "@/db/schema";
 
 import { auth, currentUser } from "@clerk/nextjs";
@@ -26,9 +26,9 @@ export const upsertUserProgress = async (categoryId: number) => {
         throw new Error("Tema não encontrado!");
     }
 
-    //if (!category.units.length || !category.units[0].themes.length) {
-        //throw new Error("O tema não tem perguntas!")
-    //}
+    if (!category.units.length || !category.units[0].quizzes.length) {
+        throw new Error("O tema não tem perguntas!")
+    }
 
     const existingUserProgress = await getUserProgress();
 
@@ -64,6 +64,7 @@ export const reduceHearts = async (challengeId: number) => {
     }
 
     const currentUserProgress = await getUserProgress();
+    const userSubscription = await getUserSubscription();
 
     const challenge = await db.query.challenges.findFirst({
         where: eq(challenges.id, challengeId)
@@ -90,6 +91,10 @@ export const reduceHearts = async (challengeId: number) => {
 
     if (!currentUserProgress) {
         throw new Error("Progresso de usuário não encontrado!");
+    }
+
+    if (userSubscription?.isActive) {
+        return { error: "subscription"};
     }
 
     if (currentUserProgress.hearts === 0) {

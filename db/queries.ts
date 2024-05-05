@@ -79,6 +79,16 @@ export const getCategories = cache(async () => {
 export const getCategoryById = cache(async (categoryId: number) => {
     const data = await db.query.categories.findFirst({
         where: eq(categories.id, categoryId),
+        with: {
+            units: {
+                orderBy: (units, {asc}) => [asc(units.order)],
+                with: {
+                    quizzes: {
+                        orderBy: (quizzes, {asc}) => [asc(quizzes.order)]
+                    }
+                }
+            }
+        }
     });
 
     return data;

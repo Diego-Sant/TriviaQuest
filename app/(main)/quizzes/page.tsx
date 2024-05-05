@@ -2,7 +2,7 @@ import FeedWrapper from "@/components/feed-wrapper";
 import StickyWrapper from "@/components/sticky-wrapper";
 import UserProgress from "@/components/user-progress";
 
-import { getCategoryProgress, getQuizPercentage, getUnits, getUserProgress } from "@/db/queries";
+import { getCategoryProgress, getQuizPercentage, getUnits, getUserProgress, getUserSubscription } from "@/db/queries";
 import Header from "./header";
 import Unit from "./unit";
 
@@ -13,9 +13,10 @@ const QuizesPage = async () => {
     const categoryProgressData = getCategoryProgress();
     const quizPercentageData = getQuizPercentage();
     const unitsData = getUnits();
+    const userSubscriptionData = getUserSubscription();
 
-    const [userProgress, units, categoryProgress, quizPercentage] = await 
-        Promise.all([userProgressData, unitsData, categoryProgressData, quizPercentageData])
+    const [userProgress, units, categoryProgress, quizPercentage, userSubscription] = await 
+        Promise.all([userProgressData, unitsData, categoryProgressData, quizPercentageData, userSubscriptionData])
 
     if (!userProgress || !userProgress.activeCategory) {
         redirect("/categorias");
@@ -30,7 +31,7 @@ const QuizesPage = async () => {
             <StickyWrapper>
                 <UserProgress activeCategory={userProgress.activeCategory} 
                 hearts={userProgress.hearts} points={userProgress.points} 
-                hasActiveSubscription={false} 
+                hasActiveSubscription={!!userSubscription?.isActive} 
                 />
             </StickyWrapper>
             <FeedWrapper>
