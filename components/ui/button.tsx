@@ -16,7 +16,7 @@ const buttonVariants = cva(
         secondaryOutline: "bg-[#121212] text-green-500 hover:bg-[#3c4042]",
         destructive: "bg-rose-600 text-primary-foreground hover:bg-rose-500 border-rose-700 border-b-4 active:border-b-0",
         destructiveOutline: "bg-[#1c1c1c] text-rose-500 hover:bg-[#3c4042]",
-        premium: "bg-indigo-500 text-primary-foreground hover:bg-indigo-500/90 border-indigo-600 border-b-4 active:border-b-0",
+        premium: "bg-gradient-to-r from-[#800080] via-[#FF1493] to-[#800080] text-primary-foreground hover:bg-gradient-to-r hover:from-[#800080]/90 hover:via-[#FF1493]/90 hover:to-[#800080]/90 hover:scale-5 hover:border-b-2 border-[#FF1493] border-b-4 active:border-b-0",
         premiumOutline: "bg-[#121212] text-indigo-500 hover:bg-[#3c4042]",
         ghost: "bg-transparent text-[#FAF9F6] border-transparent border-0 hover:bg-[#3c4042]",
         sidebar: "bg-sky-500/15 text-sky-500 border-sky-300 border-2 hover:bg-sky-500/20 transition-none",

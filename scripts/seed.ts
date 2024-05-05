@@ -20,6 +20,7 @@ const main = async () => {
         //await db.delete(schema.challenges);
         //await db.delete(schema.challengeOptions);
         //await db.delete(schema.challengeProgress);
+        await db.delete(schema.userSubscription);
 
         //await db.insert(schema.categories).values([
             //{
@@ -79,22 +80,22 @@ const main = async () => {
         //     },
         // ])
 
-        await db.insert(schema.challenges).values([
-            {
-                id: 21,
-                quizId: 10,
-                type: "ASSIST",
-                order: 1,
-                question: 'Quem é o Deus da Destruição do universo 6?'
-            },
-            {
-                id: 22,
-                quizId: 10,
-                type: "ASSIST",
-                order: 2,
-                question: 'Qual personagem ganhou o Torneio do Poder?'
-            },
-        ]);
+        // await db.insert(schema.challenges).values([
+        //     {
+        //         id: 21,
+        //         quizId: 10,
+        //         type: "ASSIST",
+        //         order: 1,
+        //         question: 'Quem é o Deus da Destruição do universo 6?'
+        //     },
+        //     {
+        //         id: 22,
+        //         quizId: 10,
+        //         type: "ASSIST",
+        //         order: 2,
+        //         question: 'Qual personagem ganhou o Torneio do Poder?'
+        //     },
+        // ]);
 
         // await db.insert(schema.challengeOptions).values([
         //     {
@@ -155,56 +156,56 @@ const main = async () => {
         //     },
         // ]);
 
-        await db.insert(schema.challengeOptions).values([
-            {
-                id: 81,
-                challengeId: 21,
-                correct: true,
-                text: "Champa"
-            },
-            {
-                id: 82,
-                challengeId: 21,
-                correct: false,
-                text: "Bills"
-            },
-            {
-                id: 83,
-                challengeId: 21,
-                correct: false,
-                text: "Sidra"
-            },
-            {
-                id: 84,
-                challengeId: 21,
-                correct: false,
-                text: "Liquiir"
-            },
-            {
-                id: 85,
-                challengeId: 22,
-                correct: false,
-                text: "Goku"
-            },
-            {
-                id: 86,
-                challengeId: 22,
-                correct: true,
-                text: "Android 17"
-            },
-            {
-                id: 87,
-                challengeId: 22,
-                correct: false,
-                text: "Freeza"
-            },
-            {
-                id: 88,
-                challengeId: 22,
-                correct: false,
-                text: "Jiren"
-            },
-        ]);
+        // await db.insert(schema.challengeOptions).values([
+        //     {
+        //         id: 81,
+        //         challengeId: 21,
+        //         correct: true,
+        //         text: "Champa"
+        //     },
+        //     {
+        //         id: 82,
+        //         challengeId: 21,
+        //         correct: false,
+        //         text: "Bills"
+        //     },
+        //     {
+        //         id: 83,
+        //         challengeId: 21,
+        //         correct: false,
+        //         text: "Sidra"
+        //     },
+        //     {
+        //         id: 84,
+        //         challengeId: 21,
+        //         correct: false,
+        //         text: "Liquiir"
+        //     },
+        //     {
+        //         id: 85,
+        //         challengeId: 22,
+        //         correct: false,
+        //         text: "Goku"
+        //     },
+        //     {
+        //         id: 86,
+        //         challengeId: 22,
+        //         correct: true,
+        //         text: "Android 17"
+        //     },
+        //     {
+        //         id: 87,
+        //         challengeId: 22,
+        //         correct: false,
+        //         text: "Freeza"
+        //     },
+        //     {
+        //         id: 88,
+        //         challengeId: 22,
+        //         correct: false,
+        //         text: "Jiren"
+        //     },
+        // ]);
 
         console.log("Acesso finalizado!");
     } catch (error) {

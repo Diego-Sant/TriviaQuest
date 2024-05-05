@@ -7,6 +7,8 @@ import Header from "./header";
 import Unit from "./unit";
 
 import { redirect } from "next/navigation";
+import Promo from "@/components/promo";
+import Quests from "@/components/quests";
 
 const QuizesPage = async () => {
     const userProgressData = getUserProgress();
@@ -33,6 +35,10 @@ const QuizesPage = async () => {
                 hearts={userProgress.hearts} points={userProgress.points} 
                 hasActiveSubscription={!!userSubscription?.isActive} 
                 />
+                {!userSubscription?.isActive && (
+                    <Promo />
+                )}
+                <Quests points={userProgress.points} />
             </StickyWrapper>
             <FeedWrapper>
                 <Header title={userProgress.activeCategory.title} />
