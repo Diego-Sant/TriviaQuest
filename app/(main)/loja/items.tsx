@@ -56,7 +56,7 @@ const Items = ({hearts, points, hasActiveSubscription}: Props) => {
                 </div>
                 <Button onClick={onRefillHearts} 
                     disabled={hearts === 10 || points < POINTS_TO_REFILL
-                    || pending}
+                    || pending || hasActiveSubscription}
                 >
                     {hearts === 10 ? "Vida está cheia!" : (
                         <div className="flex items-center">
