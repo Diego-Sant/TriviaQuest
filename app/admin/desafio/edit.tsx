@@ -6,7 +6,7 @@ export const ChallengeEdit = () => {
     <Edit>
       <SimpleForm>
         <NumberInput source="id" validate={[required()]} label="Id" />
-        <TextInput source="title" validate={[required()]} label="Título" />
+        <TextInput source="question" validate={[required()]} label="Pergunta" />
         <SelectInput source="type" choices={[
           {
           id: "SELECT",
